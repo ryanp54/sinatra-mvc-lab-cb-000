@@ -1,16 +1,22 @@
 class PigLatinizer
-@@suffix = "way"
 
-	def piglatinize(string)
-		letters = string.split("")
-		result = ""
-		char = letters.shift
-		while char && !'AEIOU'.include?(char.upcase)
-			result += char
-			char = letters.shift
+	def piglatinize(word)
+		i = word.split("").find_index {|letter| "AEIOU".include?(letter.upcase)}
+		if i == 0
+			word + "way"
+		else
+			word.slice(i, word.size - i) + word.slice(0,i) + "ay"
 		end
-		letters.unshift(char).join + result + @@suffix
 	end
 
+	def to_pig_latin(string)
+		result = ""
+		words = []
+		words = string.split if string
+		words.each do |word|
+			result += piglatinize(word) + " "
+		end
+		result.strip
+	end
 end
 
